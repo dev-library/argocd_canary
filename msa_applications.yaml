@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: msa-main
-        image: chadchae1373/msa_main:0.99 # 추가배포시 이곳을 고칩니다.
+        image: chadchae1373/msa_main:0.99 # 추가배포시 이곳을 숫자만 고칩니다.
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -83,7 +83,7 @@ spec:
     spec:
       containers:
       - name: msa-review
-        image: chadchae1373/msa_main:0.99 # 추가배포시 이곳을 고칩니다.
+        image: chadchae1373/msa_review:0.99 # 추가배포시 이곳을 숫자만 고칩니다.
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -145,7 +145,7 @@ spec:
     spec:
       containers:
       - name: msa-user
-        image: chadchae1373/msa_main:0.99 # 추가배포시 이곳을 고칩니다.
+        image: chadchae1373/msa_user:0.99 # 추가배포시 이곳을 숫자만 고칩니다.
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
