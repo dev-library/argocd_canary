@@ -1,0 +1,187 @@
+
+# msa-main Rollout
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  namespace: eks-canary-deployment
+  name: msa-main
+  labels:
+    app: msa-main
+spec:
+  replicas: 5
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: msa-main
+  template:
+    metadata:
+      labels:
+        app: msa-main
+    spec:
+      containers:
+      - name: msa-main
+        image: chadchae1373/msa_main:0.99 # 추가배포시 이곳을 고칩니다.
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: "msa-db-service"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: "12341234"
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: { duration: 30s }
+      - setWeight: 50
+      - pause: { duration: 1m }
+      - setWeight: 100
+
+---
+
+# msa-main Service
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: eks-canary-deployment
+  name: msa-main
+  labels:
+    app: msa-main
+spec:
+  type: LoadBalancer
+  selector:
+    app: msa-main
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+
+# msa-review Rollout
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  namespace: eks-canary-deployment
+  name: msa-review
+  labels:
+    app: msa-review
+spec:
+  replicas: 5
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: msa-review
+  template:
+    metadata:
+      labels:
+        app: msa-review
+    spec:
+      containers:
+      - name: msa-review
+        image: chadchae1373/msa_main:0.99 # 추가배포시 이곳을 고칩니다.
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: "msa-db-service"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: "12341234"
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: { duration: 1m }
+      - setWeight: 50
+      - pause: { duration: 2m }
+      - setWeight: 100
+
+---
+
+# msa-review Service
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: eks-canary-deployment
+  name: msa-review
+  labels:
+    app: msa-review
+spec:
+  type: LoadBalancer
+  selector:
+    app: msa-review
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+# msa-user Rollout
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  namespace: eks-canary-deployment
+  name: msa-user
+  labels:
+    app: msa-user
+spec:
+  replicas: 5
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: msa-user
+  template:
+    metadata:
+      labels:
+        app: msa-user
+    spec:
+      containers:
+      - name: msa-user
+        image: chadchae1373/msa_main:0.99 # 추가배포시 이곳을 고칩니다.
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: "msa-db-service"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: "12341234"
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: { duration: 2m }
+      - setWeight: 60
+      - pause: { duration: 3m }
+      - setWeight: 100
+
+---
+
+# msa-user Service
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: eks-canary-deployment
+  name: msa-user
+  labels:
+    app: msa-user
+spec:
+  type: LoadBalancer
+  selector:
+    app: msa-user
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
