@@ -40,6 +40,8 @@ spec:
       - pause: { duration: 30s }
       - setWeight: 50
       - pause: { duration: 1m }
+      - setWeight: 80
+      - pause: { } # no duration(개발자가 추가 배포 명령 주기전까지 무한 대기)
       - setWeight: 100
 
 ---
@@ -100,9 +102,11 @@ spec:
     canary:
       steps:
       - setWeight: 20
-      - pause: { duration: 1m }
+      - pause: { duration: 30s }
       - setWeight: 50
-      - pause: { duration: 2m }
+      - pause: { duration: 1m }
+      - setWeight: 80
+      - pause: { } # no duration(개발자가 추가 배포 명령 주기전까지 무한 대기)
       - setWeight: 100
 
 ---
@@ -162,11 +166,12 @@ spec:
     canary:
       steps:
       - setWeight: 20
-      - pause: { duration: 2m }
-      - setWeight: 60
-      - pause: { duration: 3m }
+      - pause: { duration: 30s }
+      - setWeight: 50
+      - pause: { duration: 1m }
+      - setWeight: 80
+      - pause: { } # no duration(개발자가 추가 배포 명령 주기전까지 무한 대기)
       - setWeight: 100
-
 ---
 
 # msa-user Service
