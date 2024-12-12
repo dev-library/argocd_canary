@@ -1,0 +1,8 @@
+# 이미지 버전을 변수처럼 관리하기 위해 ConfigMap을 활용
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: eks-canary-deployment
+  name: app-config
+data:
+  IMAGE_VERSION: "0.99" # 업데이트할 이미지 버전 (여기를 0.999로 수정)
