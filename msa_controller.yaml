@@ -192,7 +192,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: msa-ingress
-  namespace: eks-basic-deployment
+  namespace: eks-canary-deployment
   annotations:
     nginx.ingress.kubernetes.io/enable-access-log: "true" # 로그 활성화
 spec:
