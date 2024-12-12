@@ -41,9 +41,9 @@ spec:
       - setWeight: 50
       - pause: { duration: 1m }
       - setWeight: 80
-      - pause: { } # no duration(개발자가 추가 배포 명령 주기전까지 무한 대기)
+      - pause: { } # 개발자가 추가 배포 명령 주기 전까지 무한 대기
       - setWeight: 100
-
+      autoPromotionEnabled: false # no duration 구간 대기, true면 무시하고 자동배포 완료
 ---
 
 # msa-main Service
@@ -106,8 +106,9 @@ spec:
       - setWeight: 50
       - pause: { duration: 1m }
       - setWeight: 80
-      - pause: { } # no duration(개발자가 추가 배포 명령 주기전까지 무한 대기)
+      - pause: { } # 개발자가 추가 배포 명령 주기 전까지 무한 대기
       - setWeight: 100
+      autoPromotionEnabled: false # no duration 구간 대기, true면 무시하고 자동배포 완료
 
 ---
 
@@ -170,8 +171,9 @@ spec:
       - setWeight: 50
       - pause: { duration: 1m }
       - setWeight: 80
-      - pause: { } # no duration(개발자가 추가 배포 명령 주기전까지 무한 대기)
+      - pause: { } # 개발자가 추가 배포 명령 주기 전까지 무한 대기
       - setWeight: 100
+      autoPromotionEnabled: false # no duration 구간 대기, true면 무시하고 자동배포 완료
 ---
 
 # msa-user Service
